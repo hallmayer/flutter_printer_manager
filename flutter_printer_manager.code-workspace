@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "flutter_printer_manager"
+		},
+		{
+			"path": "flutter_printer_manager_android"
+		},
+		{
+			"path": "flutter_printer_manager_platform_interface"
+		}
+	],
+	"settings": {}
+}
