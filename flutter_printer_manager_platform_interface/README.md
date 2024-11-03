@@ -11,29 +11,23 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A common platform interface for the [`flutter_printer_manager`][1] plugin.
+This interface allows platform-specific implementations of the `flutter_printer_manager`
+plugin, as well as the plugin itself, to ensure they are supporting the
+same interface.
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
+To implement a new platform-specific implementation of `flutter_printer_manager`, extend
+[`FlutterPrinterManagerPlatform`][2] with an implementation that performs the
+platform-specific behavior, and when you register your plugin, set the default
+`FlutterPrinterManagerPlatform` by calling
+`FlutterPrinterManagerPlatform.instance = MyFlutterPrinterManagerPlatform()`.
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+This is my first package and the first try with this kind of package implementation. 
+
+[1]: ../
+[2]: lib/flutter_printer_manager_platform_interface.dart

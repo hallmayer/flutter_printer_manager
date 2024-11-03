@@ -2,16 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter_printer_manager/flutter_printer_manager.dart';
-import 'package:flutter_printer_manager/src/models/printer_connector.dart';
-import 'package:flutter_printer_manager/src/models/printer_models.dart';
+import 'package:flutter_printer_manager/src/utils/network_analyzer.dart';
+import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 
-class TcpPrinterConnector implements PrinterConnector<TcpPrinterModel> {
-  @override
-  bool isConnected = false;
-  TcpPrinterModel? printer;
+class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
+
+  TcpPrinter? printer;
   Socket? _socket;
-  StreamController<bool> isConnectedStream = StreamController<bool>();
+  
 
   static final TcpPrinterConnector _instance = TcpPrinterConnector._internal();
 
@@ -20,20 +19,20 @@ class TcpPrinterConnector implements PrinterConnector<TcpPrinterModel> {
   }
 
   TcpPrinterConnector._internal() {
+    
     isConnectedStream.add(false);
   }
 
   @override
   Future<bool> connect(model) async {
-    if(_socket != null) {
+    if (_socket != null) {
       _socket?.destroy();
     }
     try {
       var socket = await Socket.connect(model.host, model.port, timeout: const Duration(milliseconds: 500)).then((socket) {
         return socket;
       });
-    
-      
+
       printer = model;
       _socket = socket;
       _socket?.handleError((data) {
@@ -66,16 +65,31 @@ class TcpPrinterConnector implements PrinterConnector<TcpPrinterModel> {
     if (printer == null) {
       throw Exception("No Printer");
     }
-    if(printer != null && (_socket == null || isConnected == false)) {
+    if (printer != null && (_socket == null || isConnected == false)) {
       await connect(printer!);
     }
-    
-     _socket?.add(Uint8List.fromList(bytes));
-     _socket?.flush();
-    
+
+    _socket?.add(Uint8List.fromList(bytes));
+    _socket?.flush();
+
     //  _socket?.destroy();
     // _socket = null;
 
     return true;
+  }
+
+  @override
+  Future<List<TcpPrinter>> discovery() async {
+    final info = NetworkInfo();
+    final wifiIP = await info.getWifiGatewayIP();
+    final wifiSubnet = await info.getWifiSubmask();
+    if (wifiIP == null || wifiSubnet == null) {
+      throw NotConnectedException();
+    }
+    String netIp = wifiIP.substring(0, wifiIP.length - 2);
+    return (await NetworkAnalyzer.discoverByPortAndSubnetFuture(
+            subnet: netIp, port: 9100, timeout: const Duration(milliseconds: 500)))
+        .map((address) => TcpPrinter(host: address.address, port: 9100, hostname: address.host))
+        .toList();
   }
 }
