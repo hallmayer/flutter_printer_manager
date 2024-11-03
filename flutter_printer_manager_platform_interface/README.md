@@ -30,4 +30,4 @@ platform-specific behavior, and when you register your plugin, set the default
 This is my first package and the first try with this kind of package implementation. 
 
 [1]: ../
-[2]: lib/flutter_printer_manager_platform_interface.dart
+[2]: lib/src/flutter_printer_manager_platform.dart
