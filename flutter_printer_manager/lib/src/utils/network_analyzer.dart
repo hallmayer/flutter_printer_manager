@@ -15,7 +15,7 @@ class NetworkAnalyzer {
            var stream = Socket.connect(host ,port, timeout: timeout).then((socket) {
       return socket;
     });
-    var result = await stream;
+    await stream;
     return true;
         } catch(e) {
           return false;

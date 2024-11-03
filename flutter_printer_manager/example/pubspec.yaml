@@ -33,6 +33,7 @@ dependencies:
   yjy_fiscal_printer: ^0.0.1
   
 
+  path_provider: any
 dev_dependencies:
   integration_test:
     sdk: flutter

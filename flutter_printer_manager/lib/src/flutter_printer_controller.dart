@@ -3,9 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_printer_manager/flutter_printer_manager.dart';
 import 'package:flutter_printer_manager/src/models/usb_printer_connector.dart';
-import 'package:flutter_printer_manager/src/utils/network_analyzer.dart';
 import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 
 
 

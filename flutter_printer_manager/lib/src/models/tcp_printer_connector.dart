@@ -36,7 +36,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
       printer = model;
       _socket = socket;
       _socket?.handleError((data) {
-        print(data);
+       
       });
 
       _socket?.drain().then((_) {

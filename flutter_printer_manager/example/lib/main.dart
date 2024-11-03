@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_printer_manager/flutter_printer_manager.dart';
 import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:yjy_fiscal_printer/common/epson_model.dart';
 import 'package:yjy_fiscal_printer/fiscal_printer.dart';
 
 
 void main() async {
       WidgetsFlutterBinding.ensureInitialized();
-     final appDocDirectory = await getApplicationDocumentsDirectory();
+  
   runApp(const MyApp());
 }
 
@@ -23,8 +21,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+class _MyAppState extends State<MyApp> { 
 
   List<USBPrinter> printers = [];
   USBPrinter? _selectedPrinter;
@@ -115,17 +112,17 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [            
               if(printers.isNotEmpty) ...[
-                 DropdownButton(items: printers.map((printer) => DropdownMenuItem(child: Text(printer.productName ?? ""), value: printer,)).toList(), onChanged: (printer) async {
+                 DropdownButton(items: printers.map((printer) => DropdownMenuItem(value: printer,child: Text(printer.productName ?? ""),)).toList(), onChanged: (printer) async {
                   if(printer == null) return;
                  // var res = await selectPrinter(printer);
                 //  print(res);
                  }, value: _selectedPrinter,)
               ],
                ElevatedButton(onPressed: ()  async {
-                 final printers = await FlutterPrinterController.discoverNetworkPrinters();
-                 final printer = printers[0]; 
-                 var connector = await TcpPrinterConnector().connect(printer);
-                  // if(connector) {
+                //  final printers = await FlutterPrinterController().discovery(printerType: printerType);
+                //  final printer = printers[0]; 
+                //  var connector = await TcpPrinterConnector().connect(printer);
+                //   // if(connector) {
                   //   var ticket = await this.testTicket();
                   //   TcpPrinterConnector().send(ticket);
                   // }
@@ -133,15 +130,15 @@ class _MyAppState extends State<MyApp> {
 
                ElevatedButton(onPressed: ()  async {
              
-                    var ticket = await this.testTicket();
+                    var ticket = await testTicket();
                     TcpPrinterConnector().send(ticket);
                  
               }, child: const Text("Send network printer2")),
 
               Text(isConnected.toString()),
-              ElevatedButton(onPressed: () => TcpPrinterConnector().disconnect(), child: Text("Disconenct")),
+              ElevatedButton(onPressed: () => TcpPrinterConnector().disconnect(), child: const Text("Disconenct")),
               ElevatedButton(onPressed:() async {
-                final fprinter = new EpsonXmlHttpClient(Config(
+                final fprinter = EpsonXmlHttpClient(Config(
                       host: '192.168.2.113',
                       deviceId: 'local_printer',
                       timeout: 10000
@@ -183,7 +180,7 @@ class _MyAppState extends State<MyApp> {
                   // await fprinter.printFiscalReport(Report(
                   //     type: Fiscal.ReportType.DAILY_FISCAL_CLOUSE,
                   // ));
-              }, child: Text("dadsad"))
+              }, child: const Text("dadsad"))
 
              
                 //  ElevatedButton(child: Text("Connect"), onPressed: () => conntectToPrinter(),),
