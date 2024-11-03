@@ -1,7 +1,8 @@
 name: flutter_printer_manager_platform_interface
 description: "Interface package for flutter printer manager"
 version: 0.0.1
-homepage:
+repository: https://github.com/hallmayer/flutter_printer_manager/tree/main/flutter_printer_manager_platform_interface
+issue_tracker: https://github.com/hallmayer/flutter_printer_manager/issues
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
