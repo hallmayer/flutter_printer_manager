@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_printer_manager_android/src/flutter_printer_manager_api.g.dart' as pigeon;
 import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';

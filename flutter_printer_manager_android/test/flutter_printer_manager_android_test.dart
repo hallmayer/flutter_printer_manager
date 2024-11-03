@@ -19,11 +19,5 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelFlutterPrinterManagerAndroid>());
   });
 
-  test('getPlatformVersion', () async {
-    FlutterPrinterManagerAndroid flutterPrinterManagerAndroidPlugin = FlutterPrinterManagerAndroid();
-    MockFlutterPrinterManagerAndroidPlatform fakePlatform = MockFlutterPrinterManagerAndroidPlatform();
-    FlutterPrinterManagerAndroidPlatform.instance = fakePlatform;
 
-    expect(await flutterPrinterManagerAndroidPlugin.getPlatformVersion(), '42');
-  });
 }
