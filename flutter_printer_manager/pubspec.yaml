@@ -16,7 +16,11 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
+  network_info_plus: ^6.0.1
+  path_provider: ^2.1.4
+  logger: ^2.4.0
   plugin_platform_interface: ^2.1.8
+  dart_ping: ^9.0.1
   flutter_printer_manager_platform_interface: 
     path: ../flutter_printer_manager_platform_interface
   flutter_printer_manager_android: 

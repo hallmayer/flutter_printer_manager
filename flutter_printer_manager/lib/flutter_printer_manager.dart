@@ -7,3 +7,5 @@
 
 
 export 'src/flutter_printer_controller.dart';
+export 'src/models/tcp_printer_connector.dart';
+export 'src/models/printer_models.dart';

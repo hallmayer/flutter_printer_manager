@@ -1,0 +1,3 @@
+class NotConnectedException extends Error {
+  
+}

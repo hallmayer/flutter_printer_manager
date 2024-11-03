@@ -22,7 +22,8 @@ class MethodChannelFlutterPrinterManager extends FlutterPrinterManagerPlatform {
 
   @override
   Future<List<USBPrinter>> getUSBDevices() {
-    return methodChannel.invokeListMethod<USBPrinter>("getUSBDevices") as Future<List<USBPrinter>>;
+    throw UnimplementedError();
+   // return methodChannel.invokeListMethod<USBPrinter>("getUSBDevices") as Future<List<USBPrinter>>;
   }
 
   @override
