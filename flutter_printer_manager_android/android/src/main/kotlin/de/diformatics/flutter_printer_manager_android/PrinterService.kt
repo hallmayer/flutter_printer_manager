@@ -11,4 +11,7 @@ interface PrinterService {
     fun closeUSBConnection(): Boolean
 
     fun printBytes(bytes: List<Long>): Boolean;
+
+
+    fun hasUSBPermissions(vendorId: Int, productId: Int): Boolean;
 }

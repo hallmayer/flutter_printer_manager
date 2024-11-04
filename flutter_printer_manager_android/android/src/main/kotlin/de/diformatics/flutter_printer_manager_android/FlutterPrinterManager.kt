@@ -90,6 +90,10 @@ class FlutterPrinterManager constructor(binding: FlutterPlugin.FlutterPluginBind
         return printerService.openUSBConnection(vendorId?.toInt(), productId?.toInt(), false);
     }
 
+    override fun hasUSBPermissions(vendorId: Long, productId: Long): Boolean {
+        return printerService.hasUSBPermissions(vendorId.toInt(), productId.toInt());
+    }
+
     override fun closeUSBConnection(): Boolean {
         return printerService.closeUSBConnection();
     }

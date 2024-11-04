@@ -61,6 +61,11 @@ class FlutterPrinterManagerAndroid extends FlutterPrinterManagerPlatform {
         return USBPrinterState.disconnected;
     }
   }
+  
+  @override
+  Future<bool> hasUSBPermissions(int vendorId, int productId) {
+    return _hostApi.hasUSBPermissions(vendorId, productId);
+  }
 
 
 

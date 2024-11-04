@@ -1,4 +1,3 @@
-import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
@@ -7,6 +6,19 @@ import 'package:pigeon/pigeon.dart';
   kotlinOptions: KotlinOptions(package: "de.diformatics.flutter_printer_manager_android")
 ))
 
+class USBPrinter {
+  final int productId; 
+  final int vendorId; 
+  final String? manufacturerName; 
+  final String? productName; 
+  USBPrinter({required this.vendorId, required this.productId, this.manufacturerName, this.productName});
+}
+
+enum USBPrinterState {
+  none, 
+  connected,
+  disconnected
+}
 
 
 
@@ -17,6 +29,7 @@ abstract class FlutterPrinterManagerApi {
   bool selectUSBDevice(int vendorId, int productId);
 
   bool openUSBConnection(int? vendorId, int? productId); 
+  bool hasUSBPermissions(int vendorId, int productId);
   bool closeUSBConnection(); 
 
   USBPrinterState getCurrentPrinterState();

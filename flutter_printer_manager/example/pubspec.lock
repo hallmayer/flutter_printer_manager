@@ -153,14 +153,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.6"
   fake_async:
     dependency: transitive
     description:
@@ -287,14 +279,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.4"
-  http_parser:
-    dependency: transitive
-    description:
-      name: http_parser
-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.2"
   image:
     dependency: transitive
     description:
@@ -341,7 +325,7 @@ packages:
     source: hosted
     version: "3.0.0"
   logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logger
       sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
@@ -413,7 +397,7 @@ packages:
     source: hosted
     version: "1.9.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: fec0d61223fba3154d87759e3cc27fe2c8dc498f6386c6d6fc80d1afdd1bf378
@@ -633,14 +617,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
-  xml2json:
-    dependency: transitive
-    description:
-      name: xml2json
-      sha256: c8cb35b83cce879c2ea86951fd257f4e765b0030a0298b35cf94f2b3d0f32095
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.6"
   yaml:
     dependency: transitive
     description:
@@ -649,14 +625,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  yjy_fiscal_printer:
-    dependency: "direct main"
-    description:
-      name: yjy_fiscal_printer
-      sha256: "235c5efc6ee8e6503f0597d72690a9d1e2046df40426f5d90c69d02515d1742f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1"
 sdks:
   dart: ">=3.4.4 <4.0.0"
   flutter: ">=3.22.0"

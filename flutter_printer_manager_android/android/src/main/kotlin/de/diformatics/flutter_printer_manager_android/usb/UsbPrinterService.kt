@@ -294,8 +294,17 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
 
     }
 
+    override fun hasUSBPermissions(vendorId: Int, productId: Int): Boolean {
+        for(usbDevice: UsbDevice in usbManager!!.deviceList.values) {
+            if((usbDevice.vendorId == vendorId && usbDevice.productId == productId)) {
+                selectedUSBDevice = usbDevice;
+                val hasAlreadyPermission = usbManager!!.hasPermission(selectedUSBDevice)
+                return hasAlreadyPermission;
 
-
+            }
+        }
+        return false;
+    }
 
 
 }
