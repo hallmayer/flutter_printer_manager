@@ -29,7 +29,7 @@ abstract class FlutterPrinterManagerApi {
   bool selectUSBDevice(int vendorId, int productId);
 
   bool openUSBConnection(int? vendorId, int? productId); 
-  bool hasUSBPermissions(int vendorId, int productId);
+  bool hasUSBPermissions(int vendorId, int productId , {bool requestPermissions = false});
   bool closeUSBConnection(); 
 
   USBPrinterState getCurrentPrinterState();

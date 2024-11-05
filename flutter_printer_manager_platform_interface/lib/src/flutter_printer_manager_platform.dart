@@ -22,7 +22,7 @@ static final Object _token = Object();
   Future<List<USBPrinter>> getUSBDevices();
   Future<bool> selectUSBDevice(int vendorId, int productId);
 
-  Future<bool> hasUSBPermissions(int vendorId, int productId);
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false});
 
   Future<bool> openUSBConnection(int? vendorId, int? productId);
 

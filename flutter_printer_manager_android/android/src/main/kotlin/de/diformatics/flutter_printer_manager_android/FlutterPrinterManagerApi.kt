@@ -119,7 +119,7 @@ interface FlutterPrinterManagerApi {
   fun getPrinters(): List<USBPrinter>
   fun selectUSBDevice(vendorId: Long, productId: Long): Boolean
   fun openUSBConnection(vendorId: Long?, productId: Long?): Boolean
-  fun hasUSBPermissions(vendorId: Long, productId: Long): Boolean
+  fun hasUSBPermissions(vendorId: Long, productId: Long, requestPermissions: Boolean): Boolean
   fun closeUSBConnection(): Boolean
   fun getCurrentPrinterState(): USBPrinterState
   fun printBytes(bytes: List<Long>): Boolean
@@ -191,8 +191,9 @@ interface FlutterPrinterManagerApi {
             val args = message as List<Any?>
             val vendorIdArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
             val productIdArg = args[1].let { num -> if (num is Int) num.toLong() else num as Long }
+            val requestPermissionsArg = args[2] as Boolean
             val wrapped: List<Any?> = try {
-              listOf(api.hasUSBPermissions(vendorIdArg, productIdArg))
+              listOf(api.hasUSBPermissions(vendorIdArg, productIdArg, requestPermissionsArg))
             } catch (exception: Throwable) {
               wrapError(exception)
             }

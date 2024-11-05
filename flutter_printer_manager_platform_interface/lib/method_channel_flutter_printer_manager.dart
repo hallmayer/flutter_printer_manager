@@ -45,7 +45,7 @@ class MethodChannelFlutterPrinterManager extends FlutterPrinterManagerPlatform {
   }
   
   @override
-  Future<bool> hasUSBPermissions(int vendorId, int productId) {
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false}) {
     // TODO: implement hasUSBPermissions
     throw UnimplementedError();
   }

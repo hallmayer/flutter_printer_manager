@@ -24,6 +24,7 @@ class UsbPrinterConnector extends PrinterConnector<USBPrinter> {
       logger.d("Start subscribing to USB Event channel");
       stateStream?.listen((event){
         logger.d("Recieved event from USB Stream $event");
+        isConnectedStream.add(event);
       });
     } else {
       isConnected = false;
@@ -53,6 +54,9 @@ class UsbPrinterConnector extends PrinterConnector<USBPrinter> {
   }
 
   Future<bool> hasPermissionsForDevice(USBPrinter model) async {
-    return FlutterPrinterManagerPlatform.instance.hasUSBPermissions(model.vendorId, model.productId);
+    return FlutterPrinterManagerPlatform.instance.hasUSBPermissions(model.vendorId, model.productId, requestPermissions: true);
+  }
+  Future<bool> selectDevice(USBPrinter model) async {
+    return FlutterPrinterManagerPlatform.instance.selectUSBDevice(model.vendorId, model.productId);
   }
 }

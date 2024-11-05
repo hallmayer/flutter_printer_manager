@@ -44,6 +44,16 @@ class FlutterPrinterController {
   }
 
 
+  Future<bool> send({required List<int> bytes, required PrinterModel printer}) {
+    if(printer is TcpPrinter) {
+      return tcpPrinterConnector.send(bytes);
+    } else if(printer is USBPrinter) {
+      return usbPrinterConnector.send(bytes);
+    }
+    throw UnimplementedError();
+  }
+
+
 
 }
 

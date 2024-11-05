@@ -181,7 +181,7 @@ class FlutterPrinterManagerApi {
     }
   }
 
-  Future<bool> hasUSBPermissions(int vendorId, int productId) async {
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false,}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.flutter_printer_manager_android.FlutterPrinterManagerApi.hasUSBPermissions$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -189,7 +189,7 @@ class FlutterPrinterManagerApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[vendorId, productId]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[vendorId, productId, requestPermissions]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

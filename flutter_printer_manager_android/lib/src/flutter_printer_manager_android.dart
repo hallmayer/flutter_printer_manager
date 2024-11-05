@@ -63,7 +63,7 @@ class FlutterPrinterManagerAndroid extends FlutterPrinterManagerPlatform {
   }
   
   @override
-  Future<bool> hasUSBPermissions(int vendorId, int productId) {
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false}) {
     return _hostApi.hasUSBPermissions(vendorId, productId);
   }
 

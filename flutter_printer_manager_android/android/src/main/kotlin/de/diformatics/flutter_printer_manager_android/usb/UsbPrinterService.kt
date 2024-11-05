@@ -269,10 +269,10 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
                         for (i in 0 until chunks) {
 //                                val buffer: ByteArray = byteData.copyOfRange(i * chunkSize, chunkSize + i * chunkSize)
                             val buffer: ByteArray = Arrays.copyOfRange(byteData, i * chunkSize, chunkSize + i * chunkSize)
-                            b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, buffer, chunkSize, 100000)
+                            b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, buffer, chunkSize, 1000)
                         }
                     } else {
-                        b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, byteData, byteData.size, 100000)
+                        b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, byteData, byteData.size, 1000)
                     }
                     if(b == -1) {
                         //openUSBConnection(null, null, true);
@@ -294,17 +294,26 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
 
     }
 
-    override fun hasUSBPermissions(vendorId: Int, productId: Int): Boolean {
+    override fun hasUSBPermissions(
+        vendorId: Int,
+        productId: Int,
+        requestPermission: Boolean
+    ): Boolean {
         for(usbDevice: UsbDevice in usbManager!!.deviceList.values) {
             if((usbDevice.vendorId == vendorId && usbDevice.productId == productId)) {
                 selectedUSBDevice = usbDevice;
                 val hasAlreadyPermission = usbManager!!.hasPermission(selectedUSBDevice)
+                if(!hasAlreadyPermission && requestPermission) {
+                    usbManager!!.requestPermission(selectedUSBDevice, this.permissionIntent);
+                }
                 return hasAlreadyPermission;
 
             }
         }
         return false;
     }
+
+
 
 
 }
