@@ -19,11 +19,16 @@ class _UsbPrinterTabState extends State<UsbPrinterTab> {
 
   PrinterModel? selectedPrinter;
 
+  PrinterState state = PrinterState.none;
+
   @override
   void initState() {
     super.initState();
     FlutterPrinterController.instance.usbPrinterConnector.isConnectedStream.stream.listen((data) {
       logger.d("Retrieved printer status $data");
+      setState(() {
+        state = data;
+      });
     });
     
   }
@@ -33,6 +38,12 @@ class _UsbPrinterTabState extends State<UsbPrinterTab> {
     if (Platform.isAndroid) {
       return Column(
         children: [
+          PrinterStateIndicator(printerState: state),
+          const SizedBox(height: 10,),
+
+          PrinterStateStreamIndicator(stream: FlutterPrinterController.instance.usbPrinterConnector.isConnectedStream.stream,),
+          const SizedBox(height: 10,),
+
           ElevatedButton(
             onPressed: () async {
               List<USBPrinter> devices =

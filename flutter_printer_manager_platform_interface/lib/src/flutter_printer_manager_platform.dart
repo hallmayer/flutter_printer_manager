@@ -28,7 +28,7 @@ static final Object _token = Object();
 
   Future<bool> closeUSBConnection();
 
-  Future<USBPrinterState> getCurrentPrinterState();
+  Future<PrinterState> getCurrentPrinterState();
 
   Future<bool> printBytes(List<int> bytes);
 

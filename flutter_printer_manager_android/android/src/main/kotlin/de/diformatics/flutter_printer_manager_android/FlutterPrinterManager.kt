@@ -22,6 +22,9 @@ class FlutterPrinterManager constructor(binding: FlutterPlugin.FlutterPluginBind
                 super.handleMessage(msg)
                 when (msg.what) {
                     USBPrinterState.CONNECTED.raw -> {
+                        eventUSBSink?.success(1)
+                    }
+                    USBPrinterState.DISCONNECTED.raw -> {
                         eventUSBSink?.success(2)
                     }
                     USBPrinterState.NONE.raw -> {

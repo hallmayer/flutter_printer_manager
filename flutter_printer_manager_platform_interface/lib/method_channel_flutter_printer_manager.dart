@@ -15,7 +15,7 @@ class MethodChannelFlutterPrinterManager extends FlutterPrinterManagerPlatform {
   }
 
   @override
-  Future<USBPrinterState> getCurrentPrinterState() {
+  Future<PrinterState> getCurrentPrinterState() {
     // TODO: implement getCurrentPrinterState
     throw UnimplementedError();
   }

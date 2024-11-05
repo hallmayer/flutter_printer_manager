@@ -20,7 +20,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
 
   TcpPrinterConnector._internal() {
     
-    isConnectedStream.add(false);
+    isConnectedStream.add(PrinterState.none);
   }
 
   @override
@@ -35,6 +35,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
 
       printer = model;
       _socket = socket;
+      
       _socket?.handleError((data) {
        
       });
@@ -43,7 +44,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
         disconnect();
       });
       isConnected = true;
-      isConnectedStream.add(true);
+      isConnectedStream.add(PrinterState.connected);
       return true;
     } catch (e) {
       disconnect();
@@ -54,7 +55,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
   @override
   Future<bool> disconnect() async {
     isConnected = false;
-    isConnectedStream.add(false);
+    isConnectedStream.add(PrinterState.disconnected);
     _socket?.destroy();
     _socket = null;
     return true;

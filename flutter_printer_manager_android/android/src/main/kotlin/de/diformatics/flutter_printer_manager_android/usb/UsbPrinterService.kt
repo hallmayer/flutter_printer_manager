@@ -56,7 +56,7 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
             if (selectedUSBDevice != null) {
                 Toast.makeText(context, "Selected USB Device detached", Toast.LENGTH_LONG).show()
                 closeUSBConnection()
-                state = USBPrinterState.NONE
+                state = USBPrinterState.DISCONNECTED
                 messageHandler.obtainMessage(state.raw).sendToTarget();
             }
         }
@@ -64,7 +64,19 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
         override fun usbDeviceAttached(usbDevice: UsbDevice?) {
             (usbDevice)?.let {
                 Log.e(LOG_TAG, "USB Device attached")
+                if (selectedUSBDevice != null) {
+                    Toast.makeText(context, "Selected USB Device attached", Toast.LENGTH_LONG).show()
+                    if(selectedUSBDevice!!.vendorId == usbDevice.vendorId && selectedUSBDevice!!.deviceId == usbDevice.deviceId) {
+                        state = USBPrinterState.CONNECTED
 
+                        messageHandler.obtainMessage(state.raw).sendToTarget();
+                        hasUSBPermissions(vendorId = usbDevice.vendorId, productId = usbDevice.productId, true)
+                        openUSBConnection(vendorId = usbDevice.vendorId, productId = usbDevice.productId);
+
+                    }
+
+
+                }
 
 
             }
@@ -198,6 +210,7 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
             Toast.makeText(applicationContext, "Kein USB Device ausgewählt", Toast.LENGTH_LONG).show();
             return true;
         }
+
         // TODO Checks
         val usbInterface = selectedUSBDevice!!.getInterface(0);
         for (i in 0 until usbInterface.endpointCount) {
