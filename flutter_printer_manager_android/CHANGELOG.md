@@ -4,3 +4,6 @@
 
 ## 1.0.0
 First working version with USB and TCP support
+
+## 1.0.1
+Export Printer Types

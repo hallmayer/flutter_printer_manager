@@ -26,9 +26,12 @@ class UsbPrinterConnector extends PrinterConnector<USBPrinter> {
         logger.d("Recieved event from USB Stream $event");
         if(event == 2) {  
           isConnectedStream.add(PrinterState.disconnected);
+          isConnected = false;
         } else if(event == 1) {
           isConnectedStream.add(PrinterState.connected);
+           isConnected = true;
         } else {
+          isConnected = false;
           isConnectedStream.add(PrinterState.none);
         }
         

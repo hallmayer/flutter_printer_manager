@@ -10,3 +10,5 @@ export 'src/flutter_printer_controller.dart';
 export 'src/models/tcp_printer_connector.dart';
 
 export 'src/widgets/printer_state_indicator.dart';
+
+export 'package:flutter_printer_manager_platform_interface/src/printer.dart';
