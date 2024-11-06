@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_printer_manager_example/src/tcp_printer_tab.dart';
 import 'package:flutter_printer_manager_example/src/usb_printer_tab.dart';
 
 void main() async {
@@ -18,7 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -30,24 +30,20 @@ class _MyAppState extends State<MyApp> {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(text: "USB",),
-                Tab(text: "TCP"),
-              ],
+            appBar: AppBar(
+              bottom: const TabBar(
+                tabs: [
+                  Tab(
+                    text: "USB",
+                  ),
+                  Tab(text: "TCP"),
+                ],
+              ),
             ),
-          ),
-          body: const TabBarView(
-          children: [
-            UsbPrinterTab(),
-            Icon(Icons.directions_transit),
-          ],
-          )
-        ),
+            body: const TabBarView(
+              children: [UsbPrinterTab(), TCPPrinterTab()],
+            )),
       ),
     );
   }
-
-  
 }

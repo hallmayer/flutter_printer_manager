@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_printer_manager/src/utils/logger.dart';
+
 class NetworkAnalyzer {
   static Future<Socket> getPortFromPing(String host, int port, Duration timeout) {
     return Socket.connect(host, port, timeout: timeout).then((socket) {
@@ -9,18 +10,16 @@ class NetworkAnalyzer {
     });
   }
 
-  static Future<bool> checkConnectionToIpOnPort(
-      {required String host, required int port, Duration timeout = const Duration(seconds: 1)}) async {
-        try {
-           var stream = Socket.connect(host ,port, timeout: timeout).then((socket) {
-      return socket;
-    });
-    await stream;
-    return true;
-        } catch(e) {
-          return false;
-        }
-   
+  static Future<bool> checkConnectionToIpOnPort({required String host, required int port, Duration timeout = const Duration(seconds: 1)}) async {
+    try {
+      var stream = Socket.connect(host, port, timeout: timeout).then((socket) {
+        return socket;
+      });
+      await stream;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Stream<InternetAddress> discoverByPortAndSubnet(
@@ -55,8 +54,7 @@ class NetworkAnalyzer {
     return out.stream;
   }
 
-  static Future<List<InternetAddress>> discoverByPortAndSubnetFuture(
-      {required String subnet, required int port, required Duration timeout}) async {
+  static Future<List<InternetAddress>> discoverByPortAndSubnetFuture({required String subnet, required int port, required Duration timeout}) async {
     List<InternetAddress> succesfullIps = [];
     var stream = NetworkAnalyzer.discoverByPortAndSubnet(subnet, port, timeout: const Duration(milliseconds: 500));
     await for (var address in stream) {

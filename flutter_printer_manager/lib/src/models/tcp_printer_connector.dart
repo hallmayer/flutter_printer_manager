@@ -2,15 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter_printer_manager/src/utils/logger.dart';
 import 'package:flutter_printer_manager/src/utils/network_analyzer.dart';
 import 'package:flutter_printer_manager_platform_interface/flutter_printer_manager_platform_interface.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
-
   TcpPrinter? printer;
   Socket? _socket;
-  
 
   static final TcpPrinterConnector _instance = TcpPrinterConnector._internal();
 
@@ -19,7 +18,6 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
   }
 
   TcpPrinterConnector._internal() {
-    
     isConnectedStream.add(PrinterState.none);
   }
 
@@ -35,19 +33,12 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
 
       printer = model;
       _socket = socket;
-      
-      _socket?.handleError((data) {
-       
-      });
-
-      _socket?.drain().then((_) {
-        disconnect();
-      });
       isConnected = true;
       isConnectedStream.add(PrinterState.connected);
       return true;
     } catch (e) {
       disconnect();
+      logger.e(e);
       return false;
     }
   }
@@ -67,16 +58,23 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
       throw Exception("No Printer");
     }
     if (printer != null && (_socket == null || isConnected == false)) {
-      await connect(printer!);
+      var result = await connect(printer!);
+      if (!result) return result;
     }
 
-    _socket?.add(Uint8List.fromList(bytes));
-    _socket?.flush();
+    try {
+      _socket?.add(Uint8List.fromList(bytes));
+      IOSink result = await _socket?.flush();
+      return true;
+      //logger.d(res2);
+    } catch (e) {
+      return false;
+    } finally {
+      disconnect();
+    }
 
     //  _socket?.destroy();
     // _socket = null;
-
-    return true;
   }
 
   @override
@@ -88,8 +86,7 @@ class TcpPrinterConnector extends PrinterConnector<TcpPrinter> {
       throw NotConnectedException();
     }
     String netIp = wifiIP.substring(0, wifiIP.length - 2);
-    return (await NetworkAnalyzer.discoverByPortAndSubnetFuture(
-            subnet: netIp, port: 9100, timeout: const Duration(milliseconds: 500)))
+    return (await NetworkAnalyzer.discoverByPortAndSubnetFuture(subnet: netIp, port: 9100, timeout: const Duration(milliseconds: 500)))
         .map((address) => TcpPrinter(host: address.address, port: 9100, hostname: address.host))
         .toList();
   }
