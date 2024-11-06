@@ -22,6 +22,9 @@ class FlutterPrinterManager constructor(binding: FlutterPlugin.FlutterPluginBind
                 super.handleMessage(msg)
                 when (msg.what) {
                     USBPrinterState.CONNECTED.raw -> {
+                        eventUSBSink?.success(1)
+                    }
+                    USBPrinterState.DISCONNECTED.raw -> {
                         eventUSBSink?.success(2)
                     }
                     USBPrinterState.NONE.raw -> {
@@ -89,6 +92,15 @@ class FlutterPrinterManager constructor(binding: FlutterPlugin.FlutterPluginBind
     override fun openUSBConnection(vendorId: Long?, productId: Long?): Boolean {
         return printerService.openUSBConnection(vendorId?.toInt(), productId?.toInt(), false);
     }
+
+    override fun hasUSBPermissions(
+        vendorId: Long,
+        productId: Long,
+        requestPermissions: Boolean
+    ): Boolean {
+        return printerService.hasUSBPermissions(vendorId.toInt(), productId.toInt(), requestPermissions);
+    }
+
 
     override fun closeUSBConnection(): Boolean {
         return printerService.closeUSBConnection();

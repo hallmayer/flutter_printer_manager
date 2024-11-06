@@ -119,6 +119,7 @@ interface FlutterPrinterManagerApi {
   fun getPrinters(): List<USBPrinter>
   fun selectUSBDevice(vendorId: Long, productId: Long): Boolean
   fun openUSBConnection(vendorId: Long?, productId: Long?): Boolean
+  fun hasUSBPermissions(vendorId: Long, productId: Long, requestPermissions: Boolean): Boolean
   fun closeUSBConnection(): Boolean
   fun getCurrentPrinterState(): USBPrinterState
   fun printBytes(bytes: List<Long>): Boolean
@@ -174,6 +175,25 @@ interface FlutterPrinterManagerApi {
             val productIdArg = args[1].let { num -> if (num is Int) num.toLong() else num as Long? }
             val wrapped: List<Any?> = try {
               listOf(api.openUSBConnection(vendorIdArg, productIdArg))
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter_printer_manager_android.FlutterPrinterManagerApi.hasUSBPermissions$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val vendorIdArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
+            val productIdArg = args[1].let { num -> if (num is Int) num.toLong() else num as Long }
+            val requestPermissionsArg = args[2] as Boolean
+            val wrapped: List<Any?> = try {
+              listOf(api.hasUSBPermissions(vendorIdArg, productIdArg, requestPermissionsArg))
             } catch (exception: Throwable) {
               wrapError(exception)
             }

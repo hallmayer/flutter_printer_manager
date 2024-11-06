@@ -1,6 +1,6 @@
 name: flutter_printer_manager_android
 description: "Android interface implementation for flutter printer manager"
-version: 0.0.1
+version: 1.0.0
 repository: https://github.com/hallmayer/flutter_printer_manager/tree/main/flutter_printer_manager_android
 issue_tracker: https://github.com/hallmayer/flutter_printer_manager/issues
 
@@ -12,8 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   pigeon: ^21.1.0
-  plugin_platform_interface: ^2.1.8
-  flutter_printer_manager_platform_interface: ^0.0.1
+  plugin_platform_interface: ^2.1.8  
+  flutter_printer_manager_platform_interface: 
+    path: ../flutter_printer_manager_platform_interface
 
 dev_dependencies:
   flutter_test:

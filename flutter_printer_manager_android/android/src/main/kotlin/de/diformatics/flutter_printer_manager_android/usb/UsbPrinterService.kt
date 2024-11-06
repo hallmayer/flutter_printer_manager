@@ -56,7 +56,7 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
             if (selectedUSBDevice != null) {
                 Toast.makeText(context, "Selected USB Device detached", Toast.LENGTH_LONG).show()
                 closeUSBConnection()
-                state = USBPrinterState.NONE
+                state = USBPrinterState.DISCONNECTED
                 messageHandler.obtainMessage(state.raw).sendToTarget();
             }
         }
@@ -64,7 +64,19 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
         override fun usbDeviceAttached(usbDevice: UsbDevice?) {
             (usbDevice)?.let {
                 Log.e(LOG_TAG, "USB Device attached")
+                if (selectedUSBDevice != null) {
+                    Toast.makeText(context, "Selected USB Device attached", Toast.LENGTH_LONG).show()
+                    if(selectedUSBDevice!!.vendorId == usbDevice.vendorId && selectedUSBDevice!!.deviceId == usbDevice.deviceId) {
+                        state = USBPrinterState.CONNECTED
 
+                        messageHandler.obtainMessage(state.raw).sendToTarget();
+                        hasUSBPermissions(vendorId = usbDevice.vendorId, productId = usbDevice.productId, true)
+                        openUSBConnection(vendorId = usbDevice.vendorId, productId = usbDevice.productId);
+
+                    }
+
+
+                }
 
 
             }
@@ -198,6 +210,7 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
             Toast.makeText(applicationContext, "Kein USB Device ausgewählt", Toast.LENGTH_LONG).show();
             return true;
         }
+
         // TODO Checks
         val usbInterface = selectedUSBDevice!!.getInterface(0);
         for (i in 0 until usbInterface.endpointCount) {
@@ -269,10 +282,10 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
                         for (i in 0 until chunks) {
 //                                val buffer: ByteArray = byteData.copyOfRange(i * chunkSize, chunkSize + i * chunkSize)
                             val buffer: ByteArray = Arrays.copyOfRange(byteData, i * chunkSize, chunkSize + i * chunkSize)
-                            b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, buffer, chunkSize, 100000)
+                            b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, buffer, chunkSize, 1000)
                         }
                     } else {
-                        b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, byteData, byteData.size, 100000)
+                        b = selectedUsbDeviceConnection!!.bulkTransfer(selectedUsbEndpoint, byteData, byteData.size, 1000)
                     }
                     if(b == -1) {
                         //openUSBConnection(null, null, true);
@@ -294,6 +307,24 @@ class UsbPrinterService(context: Context, handler: Handler) : PrinterService {
 
     }
 
+    override fun hasUSBPermissions(
+        vendorId: Int,
+        productId: Int,
+        requestPermission: Boolean
+    ): Boolean {
+        for(usbDevice: UsbDevice in usbManager!!.deviceList.values) {
+            if((usbDevice.vendorId == vendorId && usbDevice.productId == productId)) {
+                selectedUSBDevice = usbDevice;
+                val hasAlreadyPermission = usbManager!!.hasPermission(selectedUSBDevice)
+                if(!hasAlreadyPermission && requestPermission) {
+                    usbManager!!.requestPermission(selectedUSBDevice, this.permissionIntent);
+                }
+                return hasAlreadyPermission;
+
+            }
+        }
+        return false;
+    }
 
 
 

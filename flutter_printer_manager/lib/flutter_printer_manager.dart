@@ -8,3 +8,5 @@
 
 export 'src/flutter_printer_controller.dart';
 export 'src/models/tcp_printer_connector.dart';
+
+export 'src/widgets/printer_state_indicator.dart';

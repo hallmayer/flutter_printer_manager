@@ -34,11 +34,25 @@ class FlutterPrinterController {
 
 
 
-
-
-  static Future<List<USBPrinter>> discoverUSBPrinters() {
-    return FlutterPrinterManagerPlatform.instance.getUSBDevices();
+  Future<bool> connect({required PrinterType printerType, required PrinterModel printer}) {
+    if(printerType == PrinterType.network && printer is TcpPrinter) {
+      return tcpPrinterConnector.connect(printer); 
+    } else if(printerType == PrinterType.usb && (Platform.isAndroid) && printer is USBPrinter) {
+      return usbPrinterConnector.connect(printer); 
+    }
+    throw UnimplementedError();
   }
+
+
+  Future<bool> send({required List<int> bytes, required PrinterModel printer}) {
+    if(printer is TcpPrinter) {
+      return tcpPrinterConnector.send(bytes);
+    } else if(printer is USBPrinter) {
+      return usbPrinterConnector.send(bytes);
+    }
+    throw UnimplementedError();
+  }
+
 
 
 }

@@ -49,17 +49,22 @@ class FlutterPrinterManagerAndroid extends FlutterPrinterManagerPlatform {
   }
 
   @override
-  Future<USBPrinterState> getCurrentPrinterState() async {
+  Future<PrinterState> getCurrentPrinterState() async {
     var state =  await _hostApi.getCurrentPrinterState();
     switch(state) {
       
       case pigeon.USBPrinterState.none:
-        return USBPrinterState.none; 
+        return PrinterState.none; 
       case pigeon.USBPrinterState.connected: 
-        return USBPrinterState.connected; 
+        return PrinterState.connected; 
       case pigeon.USBPrinterState.disconnected: 
-        return USBPrinterState.disconnected;
+        return PrinterState.disconnected;
     }
+  }
+  
+  @override
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false}) {
+    return _hostApi.hasUSBPermissions(vendorId, productId);
   }
 
 

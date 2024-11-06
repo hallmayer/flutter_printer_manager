@@ -1,6 +1,6 @@
 
 
-enum USBPrinterState {
+enum PrinterState {
   none, 
   connected,
   disconnected

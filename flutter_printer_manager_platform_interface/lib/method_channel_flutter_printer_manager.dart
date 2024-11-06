@@ -15,7 +15,7 @@ class MethodChannelFlutterPrinterManager extends FlutterPrinterManagerPlatform {
   }
 
   @override
-  Future<USBPrinterState> getCurrentPrinterState() {
+  Future<PrinterState> getCurrentPrinterState() {
     // TODO: implement getCurrentPrinterState
     throw UnimplementedError();
   }
@@ -41,6 +41,12 @@ class MethodChannelFlutterPrinterManager extends FlutterPrinterManagerPlatform {
   @override
   Future<bool> selectUSBDevice(int vendorId, int productId) {
     // TODO: implement selectUSBDevice
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool> hasUSBPermissions(int vendorId, int productId, {bool requestPermissions = false}) {
+    // TODO: implement hasUSBPermissions
     throw UnimplementedError();
   }
 
