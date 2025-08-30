@@ -1,6 +1,6 @@
 name: flutter_printer_manager
 description: Flutter plugin for interacting with printers on different platforms with main target to esc pos devices
-version: 1.0.1
+version: 1.1.0
 repository: https://github.com/hallmayer/flutter_printer_manager
 issue_tracker: https://github.com/hallmayer/flutter_printer_manager/issues
 
@@ -17,17 +17,17 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  network_info_plus: ^6.0.1
-  path_provider: ^2.1.4
-  logger: ^2.4.0
+  network_info_plus: ^6.1.4
+  path_provider: ^2.1.5
+  logger: ^2.6.1
   plugin_platform_interface: ^2.1.8
-  flutter_printer_manager_platform_interface: ^1.0.0
-  flutter_printer_manager_android: ^1.0.0
+  flutter_printer_manager_platform_interface: ^1.1.0
+  flutter_printer_manager_android: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 topics: 
   - escpos

@@ -1,6 +1,6 @@
 name: flutter_printer_manager_android
 description: "Android interface implementation for flutter printer manager"
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/hallmayer/flutter_printer_manager/tree/main/flutter_printer_manager_android
 issue_tracker: https://github.com/hallmayer/flutter_printer_manager/issues
 
@@ -11,14 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pigeon: ^21.1.0
+  pigeon: ^26.0.1
   plugin_platform_interface: ^2.1.8  
-  flutter_printer_manager_platform_interface: ^1.0.0
+  flutter_printer_manager_platform_interface: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
